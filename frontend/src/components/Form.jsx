@@ -3,7 +3,10 @@ import api from "../api"
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/Form.css"
-
+// A reusable form component that handles user login or registration.
+// Props:
+// - route: API endpoint for submission (e.g., "/login" or "/register").
+// - method: Specifies whether the form is for "login" or "register". 
 function Form({route, method}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -15,13 +18,15 @@ function Form({route, method}) {
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
-
+        // Handles form submission, prevents page refresh, and sends user credentials
+        // to the specified API route. If "login", stores tokens and navigates to the homepage.
+        // If "register", navigates to the login page upon success.
         try { 
-            const res = await api.post(route, {username, password})
+            const res = await api.post(route, {username, password})  //sends POST to api with user and pass
             if (method === "login") {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
+                localStorage.setItem(ACCESS_TOKEN, res.data.access); //saves jwt tokens
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/")
+                navigate("/") // navigates to homepage
             } else {
                 navigate("/login")
             }
@@ -29,7 +34,7 @@ function Form({route, method}) {
         catch (error) {
             alert(error)
         } finally {
-            setLoading(false);
+            setLoading(false); // sets loading flag to false
         }
     }
 
