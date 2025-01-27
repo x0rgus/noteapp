@@ -23,18 +23,18 @@ function Home() {
         api.delete(`/api/notes/delete/${id}`).then((res) => {
             if (res.status === 204) alert("Note deleted!");
             else alert("Failed to delete note");
+            getNotes();
         }).catch((error) => alert(error));
-        getNotes();
     };
 
     const createNote = (e) =>{
         e.preventDefault()
-        api.post("api/notes", {content, title}).then ((res) =>{
+        api.post("/api/notes/", {content, title}).then ((res) =>{
             if (res.status === 201) alert("Note created!");
             else alert("Failed to make note");
+            getNotes();
         }).catch((err) => alert(err));
-        getNotes();
-    }
+    };
 
     
     return <div>
