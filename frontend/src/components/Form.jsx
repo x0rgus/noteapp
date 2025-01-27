@@ -3,6 +3,7 @@ import api from "../api"
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/Form.css"
+import LoadingIndicator from "./LoadingIndicator";
 // A reusable form component that handles user login or registration.
 // Props:
 // - route: API endpoint for submission (e.g., "/login" or "/register").
@@ -54,6 +55,7 @@ function Form({route, method}) {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
         />
+        {loading && <LoadingIndicator />}
         <button className="form-button" type="submit">{name}</button>
     </form>
 }
